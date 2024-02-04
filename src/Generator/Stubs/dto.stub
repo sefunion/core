@@ -1,0 +1,15 @@
+<?php
+namespace {NAMESPACE};
+
+use Easy\Interfaces\EasyModelExcel;
+use Easy\Annotation\ExcelData;
+use Easy\Annotation\ExcelProperty;
+
+/**
+ * {COMMENT}
+ */
+#[ExcelData]
+class {CLASS_NAME} implements EasyModelExcel
+{
+{LIST}
+}
