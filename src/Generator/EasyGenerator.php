@@ -25,7 +25,7 @@ abstract class EasyGenerator
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->setStubDir(BASE_PATH . '/vendor/sef/core/src/Generator/Stubs/');
+        $this->setStubDir(BASE_PATH . '/vendor/sefunion/core/src/Generator/Stubs/');
         $this->container = $container;
     }
 

@@ -33,7 +33,7 @@ abstract class EasyCommand extends HyperfCommand
 
     protected function getStub($filename): string
     {
-        return BASE_PATH . '/vendor/sef/core/src/Command/Creater/Stubs/' . $filename . '.stub';
+        return BASE_PATH . '/vendor/sefunion/core/src/Command/Creater/Stubs/' . $filename . '.stub';
     }
 
     protected function getModulePath(): string

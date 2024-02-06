@@ -12,6 +12,6 @@ class EasyMigrationCreator extends MigrationCreator
 {
     public function stubPath(): string
     {
-        return BASE_PATH . '/vendor/sef/core/src/Command/Migrate/Stubs';
+        return BASE_PATH . '/vendor/sefunion/core/src/Command/Migrate/Stubs';
     }
 }
