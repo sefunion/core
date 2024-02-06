@@ -9,10 +9,10 @@ namespace Easy\Generator;
 use App\Setting\Model\SettingGenerateColumns;
 use App\Setting\Model\SettingGenerateTables;
 use Easy\Interfaces\ServiceInterface\GenerateColumnServiceInterface;
-use Hyperf\Utils\Filesystem\Filesystem;
 use Easy\Exception\NormalStatusException;
 use Easy\Generator\Traits\MapperGeneratorTraits;
 use Easy\Helper\Str;
+use Hyperf\Support\Filesystem\Filesystem ;
 
 /**
  * Mapper类生成
