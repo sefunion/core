@@ -12,7 +12,7 @@ class Easy
 {
     private static string $easyName = 'EasyCMF';
 
-    private static string $version = '1.5.1';
+    private static string $version = '0.0.1';
 
     private string $appPath = '';
 
