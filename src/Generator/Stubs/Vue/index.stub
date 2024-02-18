@@ -1,8 +1,8 @@
 <template>
-  <div class="ma-content-block lg:flex justify-between p-4">
+  <div class="easy-content-block lg:flex justify-between p-4">
     <!-- CRUD 组件 -->
-    <ma-crud :options="options" :columns="columns" ref="crudRef">
-    </ma-crud>
+    <easy-crud :options="options" :columns="columns" ref="crudRef">
+    </easy-crud>
   </div>
 </template>
 <script setup>
