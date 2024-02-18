@@ -268,9 +268,10 @@ UseNamespace;
         foreach ($columns as $column) {
             $phpContent .= $this->getSearchCode($column);
         }
-        $phpContent = sprintf('$this->paramsEmptyQuery($params, [%s        ], $query);', PHP_EOL.$phpContent."\t".PHP_EOL);
+
         return $phpContent;
     }
+    
 
     /**
      * 获取业务名称
