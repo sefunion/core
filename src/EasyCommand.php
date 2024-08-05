@@ -45,4 +45,21 @@ abstract class EasyCommand extends HyperfCommand
     {
         return sprintf('EasyCMF', date('Y'));
     }
+
+    public function getParams()
+    {
+        $options = $this->input->getOptions();
+        if (empty($this->getRules())) {
+            return $options;
+        }
+
+        // Validator::make($options, $this->getRules());
+        return $options;
+    }
+
+    protected function getRules()
+    {
+        return [];
+    }
+
 }
