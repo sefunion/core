@@ -6,7 +6,6 @@
 
 declare(strict_types=1);
 
-
 namespace Easy\Generator;
 
 use App\Setting\Model\SettingGenerateTables;
