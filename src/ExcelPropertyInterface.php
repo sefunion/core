@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Easy\Office;
+namespace Easy;
 
 use Easy\EasyModel;
 use Psr\Http\Message\ResponseInterface;

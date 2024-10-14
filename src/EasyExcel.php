@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Easy\Office;
+namespace Easy;
 
 use Hyperf\Di\Annotation\AnnotationCollector;
 use Hyperf\HttpMessage\Stream\SwooleStream;

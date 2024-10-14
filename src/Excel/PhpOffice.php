@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Easy\Office\Excel;
+namespace Easy\Excel;
 
 use Hyperf\Collection\Arr;
 use Easy\Exception\EasyException;
 use Easy\EasyModel;
 use Easy\EasyRequest;
-use Easy\Office\ExcelPropertyInterface;
-use Easy\Office\EasyExcel;
+use Easy\ExcelPropertyInterface;
+use Easy\EasyExcel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

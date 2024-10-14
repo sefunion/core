@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Easy\Office\Excel;
+namespace Easy\Excel;
 
 use Hyperf\Collection\Arr;
 use Easy\Exception\EasyException;
 use Easy\EasyModel;
 use Easy\EasyRequest;
 use Easy\EasyResponse;
-use Easy\Office\ExcelPropertyInterface;
-use Easy\Office\EasyExcel;
+use Easy\ExcelPropertyInterface;
+use Easy\EasyExcel;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
