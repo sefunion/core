@@ -7,8 +7,8 @@ declare(strict_types=1);
 namespace Easy;
 
 use Hyperf\Database\Model\Collection;
-use Easy\Office\Excel\PhpOffice;
-use Easy\Office\Excel\XlsWriter;
+use Easy\Excel\PhpOffice;
+use Easy\Excel\XlsWriter;
 
 class EasyCollection extends Collection
 {
