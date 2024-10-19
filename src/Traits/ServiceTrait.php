@@ -2,16 +2,21 @@
 
 declare(strict_types=1);
 
-
 namespace Easy\Traits;
 
 use Hyperf\Database\Model\Collection;
+use Hyperf\DbConnection\Db;
+use Hyperf\Tappable\HigherOrderTapProxy;
 use Easy\Abstracts\AbstractMapper;
-use Easy\Annotation\Transaction;
 use Easy\EasyCollection;
 use Easy\EasyModel;
 use Easy\EasyResponse;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
+
+use function Hyperf\Collection\collect;
 
 trait ServiceTrait
 {
@@ -94,7 +99,7 @@ trait ServiceTrait
     /**
      * 新增数据.
      */
-    public function save(array $data): int
+    public function save(array $data): mixed
     {
         return $this->mapper->save($data);
     }
@@ -102,19 +107,20 @@ trait ServiceTrait
     /**
      * 批量新增.
      */
-    #[Transaction]
     public function batchSave(array $collects): bool
     {
-        foreach ($collects as $collect) {
-            $this->mapper->save($collect);
-        }
-        return true;
+        return Db::transaction(function () use ($collects) {
+            foreach ($collects as $collect) {
+                $this->mapper->save($collect);
+            }
+            return true;
+        });
     }
 
     /**
      * 读取一条数据.
      */
-    public function read(int $id, array $column = ['*']): ?EasyModel
+    public function read(mixed $id, array $column = ['*']): ?EasyModel
     {
         return $this->mapper->read($id, $column);
     }
@@ -122,7 +128,7 @@ trait ServiceTrait
     /**
      * Description:获取单个值
      * User:mike.
-     * @return null|\Hyperf\Tappable\HigherOrderTapProxy|mixed|void
+     * @return null|HigherOrderTapProxy|mixed|void
      */
     public function value(array $condition, string $columns = 'id')
     {
@@ -143,7 +149,7 @@ trait ServiceTrait
      * 从回收站读取一条数据.
      * @noinspection PhpUnused
      */
-    public function readByRecycle(int $id): EasyModel
+    public function readByRecycle(mixed $id): EasyModel
     {
         return $this->mapper->readByRecycle($id);
     }
@@ -159,7 +165,7 @@ trait ServiceTrait
     /**
      * 更新一条数据.
      */
-    public function update(int $id, array $data): bool
+    public function update(mixed $id, array $data): bool
     {
         return $this->mapper->update($id, $data);
     }
@@ -207,7 +213,7 @@ trait ServiceTrait
     /**
      * 修改数据状态
      */
-    public function changeStatus(int $id, string $value, string $filed = 'status'): bool
+    public function changeStatus(mixed $id, string $value, string $filed = 'status'): bool
     {
         return $value == EasyModel::ENABLE ? $this->mapper->enable([$id], $filed) : $this->mapper->disable([$id], $filed);
     }
@@ -215,18 +221,18 @@ trait ServiceTrait
     /**
      * 数字更新操作.
      */
-    public function numberOperation(int $id, string $field, int $value): bool
+    public function numberOperation(mixed $id, string $field, int $value): bool
     {
         return $this->mapper->numberOperation($id, $field, $value);
     }
 
     /**
      * 导出数据.
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws Exception
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    public function export(array $params, ?string $dto, string $filename = null, \Closure $callbackData = null): ResponseInterface
+    public function export(array $params, ?string $dto, ?string $filename = null, ?\Closure $callbackData = null): ResponseInterface
     {
         if (empty($dto)) {
             return container()->get(EasyResponse::class)->error('导出未指定DTO');
@@ -242,13 +248,14 @@ trait ServiceTrait
     /**
      * 数据导入.
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    #[Transaction]
     public function import(string $dto, ?\Closure $closure = null): bool
     {
-        return $this->mapper->import($dto, $closure);
+        return Db::transaction(function () use ($dto, $closure) {
+            return $this->mapper->import($dto, $closure);
+        });
     }
 
     /**
@@ -256,7 +263,7 @@ trait ServiceTrait
      */
     public function getArrayToPageList(?array $params = [], string $pageName = 'page'): array
     {
-        $collect = $this->handleArraySearch(easy_collect($this->getArrayData($params)), $params);
+        $collect = $this->handleArraySearch(collect($this->getArrayData($params)), $params);
 
         $pageSize = EasyModel::PAGE_SIZE;
         $page = 1;
