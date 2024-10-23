@@ -11,6 +11,8 @@ use Easy\Helper\LoginUser;
 use Easy\Interfaces\ServiceInterface\QueueLogServiceInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use Easy\Snowflake\SnowflakeIdGenerator;
+use Ramsey\Uuid\Uuid;
 
 if (! function_exists('container')) {
     /**
@@ -155,7 +157,17 @@ if (! function_exists('snowflake_id')) {
      */
     function snowflake_id(): string
     {
-        return container()->get(\Hyperf\Snowflake\IdGeneratorInterface::class)->generate();
+        return (string) container()->get(SnowflakeIdGenerator::class)->generate();
+    }
+}
+
+if (! function_exists('uuid')) {
+    /**
+     * 生成UUID.
+     */
+    function uuid(): string
+    {
+        return Uuid::uuid4()->toString();
     }
 }
 

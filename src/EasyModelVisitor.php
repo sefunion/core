@@ -8,6 +8,7 @@ namespace Easy;
 
 use Hyperf\Database\Commands\Ast\ModelUpdateVisitor;
 use Easy\Annotation\DependProxy;
+use Easy\Helper\Str;
 
 /**
  * class EasyModelVisitor.
