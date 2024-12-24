@@ -248,3 +248,42 @@ if (! function_exists('filled')) {
         return ! blank($value);
     }
 }
+
+
+if (!function_exists('encrypt')) {
+    function encrypt($data, string $key = 'mysql'): string|bool
+    {
+        if (is_null($data)) {
+            return "";
+        }
+        $data          = strval($data);
+        $encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', $key), 'default');
+        $encryptionKey = substr($encryptionKey, 4, 16);
+        $encryptString = openssl_encrypt(
+            $data,
+            'AES-128-ECB',
+            $encryptionKey,
+            OPENSSL_RAW_DATA
+        );
+
+        return $encryptString !== false ? strtoupper(bin2hex($encryptString)) : false;
+    }
+}
+
+if (!function_exists('decrypt')) {
+    function decrypt($data, string $key = 'mysql'): string|bool
+    {
+        if (is_null($data)) {
+            return "";
+        }
+        $encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', $key), 'default');
+        $decryptString = openssl_decrypt(
+            (string)hex2bin(strtoupper(empty($data) ? '' : (string)$data)),
+            'AES-128-ECB',
+            substr($encryptionKey, 4, 16),
+            OPENSSL_RAW_DATA
+        );
+
+        return $decryptString !== false ? $decryptString : false;
+    }
+}
