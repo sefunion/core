@@ -9,22 +9,22 @@ class EasyEncryptArrayCast implements CastsAttributes
     /**
      * 将取出的数据进行转换
      */
-    public function get($model, $key, $value, $attributes)
+    public function get($model, $key = 'mysql', $value, $attributes)
     {
         if (empty($value)) {
             return $value;
         }
-        return json_decode(decrypt($value), true);
+        return json_decode(decrypt($value,$key), true);
     }
 
     /**
      * 转换成将要进行存储的值
      */
-    public function set($model, $key, $value, $attributes): bool|array|string|null
+    public function set($model, $key = 'mysql', $value, $attributes): bool|array|string|null
     {
         if (empty($value)) {
             return null;
         }
-        return encrypt(json_encode($value, JSON_UNESCAPED_UNICODE));
+        return encrypt(json_encode($value, JSON_UNESCAPED_UNICODE),$key);
     }
 }
