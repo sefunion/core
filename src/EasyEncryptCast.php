@@ -15,7 +15,7 @@ class EasyEncryptCast implements CastsAttributes
             return $value;
         }
         $encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', 'mysql'), 'default');
-        $encryptionKey = substr($encryptionKey, 4, 16);
+        // $encryptionKey = substr($encryptionKey, 4, 7);
         return decrypt($value,$encryptionKey);
     }
 
@@ -28,7 +28,7 @@ class EasyEncryptCast implements CastsAttributes
             return $value;
         }
         $encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', 'mysql'), 'default');
-        $encryptionKey = substr($encryptionKey, 4, 16);
+        // $encryptionKey = substr($encryptionKey, 4, 7);
         return encrypt($value,$encryptionKey);
     }
 }
