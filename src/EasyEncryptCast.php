@@ -9,22 +9,22 @@ class EasyEncryptCast implements CastsAttributes
     /**
      * 将取出的数据进行转换
      */
-    public function get($model, $key = 'mysql', $value, $attributes)
+    public function get($model, $key ,$value, $attributes)
     {
         if (empty($value)) {
             return $value;
         }
-        return decrypt($value,$key);
+        return decrypt($value,$key = 'mysql');
     }
 
     /**
      * 转换成将要进行存储的值
      */
-    public function set($model, $key = 'mysql', $value, $attributes): bool|array|string|null
+    public function set($model, $key ,$value, $attributes,): bool|array|string|null
     {
         if (empty($value)) {
             return $value;
         }
-        return encrypt($value,$key);
+        return encrypt($value,$key = 'mysql');
     }
 }
