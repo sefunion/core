@@ -14,7 +14,9 @@ class EasyEncryptArrayCast implements CastsAttributes
         if (empty($value)) {
             return $value;
         }
-        return json_decode(decrypt($value,$key = 'mysql'), true);
+        $encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', 'mysql'), 'default');
+        $encryptionKey = substr($encryptionKey, 4, 16);
+        return json_decode(decrypt($value,$encryptionKey), true);
     }
 
     /**
@@ -25,6 +27,8 @@ class EasyEncryptArrayCast implements CastsAttributes
         if (empty($value)) {
             return null;
         }
-        return encrypt(json_encode($value, JSON_UNESCAPED_UNICODE),$key = 'mysql');
+        $encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', 'mysql'), 'default');
+        $encryptionKey = substr($encryptionKey, 4, 16);
+        return encrypt(json_encode($value, JSON_UNESCAPED_UNICODE),$encryptionKey);
     }
 }
