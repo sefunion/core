@@ -11,6 +11,7 @@ class EasyEncryptArrayCast implements CastsAttributes
     public function __construct()
     {
         $this->encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', 'mysql'), 'default') ?? "4vYtBWNH9g52VXLSuIszixbAdOqjTm36GM1yRkUw8DE7CpfJQ0lcKaheoPZFnrJIN";
+        $this->encryptionKey = substr($this->encryptionKey, 4, 16);
     }
 
     /**
