@@ -6,6 +6,15 @@ use Hyperf\Contract\CastsAttributes;
 
 class EasyEncryptCast implements CastsAttributes
 {
+
+    private string $encryptionKey;
+
+    public function __construct()
+    {
+        $this->encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', 'mysql'), 'default') ?? "4vYtBWNH9g52VXLSuIszixbAdOqjTm36GM1yRkUw8DE7CpfJQ0lcKaheoPZFnrJIN";
+    }
+
+    
     /**
      * 将取出的数据进行转换
      */
@@ -14,9 +23,7 @@ class EasyEncryptCast implements CastsAttributes
         if (empty($value)) {
             return $value;
         }
-        $encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', 'mysql'), 'default');
-        // $encryptionKey = substr($encryptionKey, 4, 7);
-        return decrypt($value,$encryptionKey);
+        return data_decrypt($value,$this->encryptionKey);
     }
 
     /**
@@ -27,8 +34,6 @@ class EasyEncryptCast implements CastsAttributes
         if (empty($value)) {
             return $value;
         }
-        $encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', 'mysql'), 'default');
-        // $encryptionKey = substr($encryptionKey, 4, 7);
-        return encrypt($value,$encryptionKey);
+        return data_encrypt($value,$this->encryptionKey);
     }
 }

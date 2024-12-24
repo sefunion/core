@@ -249,22 +249,37 @@ if (! function_exists('filled')) {
     }
 }
 
+if (!function_exists('data_encrypt')) {
+    function data_encrypt($data, string $encryptionKey): string|bool
+    {
+        if (is_null($data)) {
+            return "";
+        }
+        $data          = strval($data);
+        $encryptString = openssl_encrypt(
+            $data,
+            'AES-128-ECB',
+            $encryptionKey,
+            OPENSSL_RAW_DATA
+        );
 
-if (!function_exists('encrypt')) {
-    function encrypt($data, $key) {
-        $ivlen = openssl_cipher_iv_length('AES-256-CBC');
-        $iv = openssl_random_pseudo_bytes($ivlen);
-        $encrypted = openssl_encrypt($data, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
-        return base64_encode($iv . $encrypted);
+        return $encryptString !== false ? strtoupper(bin2hex($encryptString)) : false;
     }
 }
 
-if (!function_exists('decrypt')) {
-    function decrypt($data, $key) {
-        $data = base64_decode($data);
-        $ivlen = openssl_cipher_iv_length('AES-256-CBC');
-        $iv = substr($data, 0, $ivlen);
-        $encrypted = substr($data, $ivlen);
-        return openssl_decrypt($encrypted, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+if (!function_exists('data_decrypt')) {
+    function data_decrypt($data, string $encryptionKey): string|bool
+    {
+        if (is_null($data)) {
+            return "";
+        }
+        $decryptString = openssl_decrypt(
+            (string)hex2bin(strtoupper(empty($data) ? '' : (string)$data)),
+            'AES-128-ECB',
+            $encryptionKey,
+            OPENSSL_RAW_DATA
+        );
+
+        return $decryptString !== false ? $decryptString : false;
     }
 }
