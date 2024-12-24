@@ -262,8 +262,8 @@ if (!function_exists('encrypt')) {
         $encryptString = openssl_encrypt(
             $data,
             'AES-128-ECB',
-            $encryptionKey,
-            OPENSSL_RAW_DATA
+            $encryptionKey
+            // OPENSSL_RAW_DATA
         );
 
         return $encryptString !== false ? strtoupper(bin2hex($encryptString)) : false;
@@ -280,8 +280,8 @@ if (!function_exists('decrypt')) {
         $decryptString = openssl_decrypt(
             (string)hex2bin(strtoupper(empty($data) ? '' : (string)$data)),
             'AES-128-ECB',
-            substr($encryptionKey, 4, 16),
-            OPENSSL_RAW_DATA
+            substr($encryptionKey, 4, 16)
+            // OPENSSL_RAW_DATA
         );
 
         return $decryptString !== false ? $decryptString : false;
