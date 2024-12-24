@@ -49,7 +49,7 @@ abstract class AbstractMapper
     /**
      * 获取数据.
      */
-    public function getAttributes(): array
+    public function getAttributes(): mixed
     {
         return Context::get('attributes', []);
     }
