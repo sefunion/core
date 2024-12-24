@@ -260,7 +260,7 @@ if (!function_exists('encrypt')) {
 }
 
 if (!function_exists('decrypt')) {
-    function decrypt($data, $key = '') {
+    function decrypt($data, $key) {
         $data = base64_decode($data);
         $ivlen = openssl_cipher_iv_length('AES-256-CBC');
         $iv = substr($data, 0, $ivlen);
