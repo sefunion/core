@@ -22,7 +22,7 @@ class EasyEncryptArrayCast implements CastsAttributes
         if (empty($value)) {
             return $value;
         }
-        return json_decode(data_decrypt($value,$this->encryptionKey), true);
+        return json_decode(decrypt($value,$this->encryptionKey), true);
     }
 
     /**
@@ -33,6 +33,6 @@ class EasyEncryptArrayCast implements CastsAttributes
         if (empty($value)) {
             return null;
         }
-        return data_encrypt(json_encode($value, JSON_UNESCAPED_UNICODE),$this->encryptionKey);
+        return encrypt(json_encode($value, JSON_UNESCAPED_UNICODE),$this->encryptionKey);
     }
 }
