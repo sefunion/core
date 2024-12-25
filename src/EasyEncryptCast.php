@@ -12,7 +12,7 @@ class EasyEncryptCast implements CastsAttributes
     public function __construct()
     {
         $this->encryptionKey = config(sprintf('custom.encryption.%s.encryption_key', 'mysql'), 'default') ?? "4vYtBWNH9g52VXLSuIszixbAdOqjTm36GM1yRkUw8DE7CpfJQ0lcKaheoPZFnrJIN";
-        $this->encryptionKey = substr($this->encryptionKey, 4, 16);
+        // $this->encryptionKey = substr($this->encryptionKey, 4, 16);
     }
 
     
@@ -24,7 +24,7 @@ class EasyEncryptCast implements CastsAttributes
         if (empty($value)) {
             return $value;
         }
-        return data_decrypt($value,$this->encryptionKey);
+        return decrypt($value,$this->encryptionKey);
     }
 
     /**
@@ -35,6 +35,6 @@ class EasyEncryptCast implements CastsAttributes
         if (empty($value)) {
             return $value;
         }
-        return data_encrypt($value,$this->encryptionKey);
+        return encrypt($value,$this->encryptionKey);
     }
 }

@@ -249,41 +249,6 @@ if (! function_exists('filled')) {
     }
 }
 
-if (!function_exists('data_encrypt')) {
-    function data_encrypt($data, string $encryptionKey): string|bool
-    {
-        if (is_null($data)) {
-            return "";
-        }
-        $data          = strval($data);
-        $encryptString = openssl_encrypt(
-            $data,
-            'AES-128-ECB',
-            $encryptionKey,
-            OPENSSL_RAW_DATA
-        );
-
-        return $encryptString !== false ? strtoupper(bin2hex($encryptString)) : false;
-    }
-}
-
-if (!function_exists('data_decrypt')) {
-    function data_decrypt($data, string $encryptionKey): string|bool
-    {
-        if (is_null($data)) {
-            return "";
-        }
-        $decryptString = openssl_decrypt(
-            (string)hex2bin(strtoupper(empty($data) ? '' : (string)$data)),
-            'AES-128-ECB',
-            $encryptionKey,
-            OPENSSL_RAW_DATA
-        );
-
-        return $decryptString !== false ? $decryptString : false;
-    }
-}
-
 if (!function_exists('encrypt')) {
     function encrypt($data, $key) {
         $ivlen = openssl_cipher_iv_length('AES-256-CBC');
